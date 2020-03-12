@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Schedule_MultipleResource"
+             x:Class="Schedule_MultipleResource.MainPage"
+             xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms">
+    <Grid x:Name="grid_layout">
+        <schedule:SfSchedule
+                x:Name="Schedule"
+                HeaderHeight="50"
+                ViewHeaderHeight="40"
+                HorizontalOptions="FillAndExpand"
+                ScheduleView="TimelineView"
+                VerticalOptions="FillAndExpand"
+                DataSource="{Binding ListOfMeeting}" 
+                SelectedResources="{Binding SelectedResources}"
+                ScheduleResources="{Binding Resources}"
+            TimeInterval="720"
+            ShowResourceView="True"
+            ResourceItemTemplate="{Binding WithResource}"
+            ResourceViewMode="Absolute">
+            <schedule:SfSchedule.ViewHeaderStyle>
+                <schedule:ViewHeaderStyle DateFontSize="20" DayFontSize="20">
+                </schedule:ViewHeaderStyle>
+            </schedule:SfSchedule.ViewHeaderStyle>
+            <schedule:SfSchedule.TimelineViewSettings>
+                <schedule:TimelineViewSettings DaysCount="7">
+                    <schedule:TimelineViewSettings.LabelSettings>
+                        <schedule:TimelineLabelSettings>
+                            <schedule:TimelineLabelSettings.DateFormat>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="UWP" Value="%d ddd"></On>
+                                    <On Platform="Android" Value="d EEE"></On>
+                                    <On Platform="iOS" Value="d EEE"></On>
+                                    <On Platform="WPF" Value="%d ddd"></On>
+                                </OnPlatform>
+                            </schedule:TimelineLabelSettings.DateFormat>
+                        </schedule:TimelineLabelSettings>
+                    </schedule:TimelineViewSettings.LabelSettings>
+                </schedule:TimelineViewSettings>
+            </schedule:SfSchedule.TimelineViewSettings>
+            <schedule:SfSchedule.AppointmentMapping>
+                <schedule:ScheduleAppointmentMapping
+                        ColorMapping="Color"
+                        EndTimeMapping="To"
+                        IsAllDayMapping="IsAllDay"
+                        StartTimeMapping="From"
+                        SubjectMapping="EventName"
+                        ResourceIdsMapping="Resources"/>
+            </schedule:SfSchedule.AppointmentMapping>
+            <schedule:SfSchedule.ResourceMapping>
+                <schedule:ResourceMapping Name="Name"
+                                            Id="ID"
+                                            Color="Color"/>
+            </schedule:SfSchedule.ResourceMapping>
+            <schedule:SfSchedule.ResourceViewSettings>
+                <schedule:ResourceViewSettings SelectionMode ="Multiple"/>
+            </schedule:SfSchedule.ResourceViewSettings>
+            <schedule:SfSchedule.BindingContext>
+                <local:ScheduleViewModel/>
+            </schedule:SfSchedule.BindingContext>
+        </schedule:SfSchedule>
+    </Grid>
+</ContentPage>
